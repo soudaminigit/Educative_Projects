@@ -1,0 +1,24 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+#Assuiming code in src folder
+code: src
+
+command: >-
+  pip install bs4 && pip install nltk && python preprocessing.py --data ${{inputs.data}} --output ${{outputs.preprocessed_data}}
+#Input IMDB.csv from Azure datastore
+inputs:
+  data: 
+    type: uri_file
+    #path: wasbs://datasets@azuremlexamples.blob.core.windows.net/IMDB.csv
+    path: ../Dataset/IMDB_Review.csv
+code: src
+outputs:
+  preprocessed_data:
+    type: uri_folder
+    mode: upload
+# Using sklearn and Ubuntu environment
+environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu:9
+# Using the AzureML compute space 
+compute: azureml:ComputeHigh
+display_name: Data preprocessing
+experiment_name: Preprocessing
+description: preprocessing text data in IMDB dataset.

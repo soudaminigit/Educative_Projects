@@ -1,0 +1,72 @@
+import tensorflow
+import argparse
+#import mlflow
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+import pandas as pd
+
+def process(args):
+    #mlflow.autolog()
+    print(args)
+    data = pd.read_csv(args.har_csv)
+    print("data shape is : ",data.shape)
+    print("data fields are : ",data.columns)
+    print(data.sample(5))
+    #data.isna()[data.isna().sum()>0].fillna(0)
+    data['activity_code'] = data.Activity.astype('category').cat.codes
+    data=data.drop('Activity',axis=1)
+    return data
+
+
+def split_data(args):
+    print("Args inside split data ")
+    print(args)
+    data = process(args)
+    lgt = len(data)
+    x_col=data.columns.to_list()
+    x_col.pop(-1)
+    x_data=data[x_col]
+    y_col='activity_code'
+    train_x,test_x,train_y,test_y = data[x_col][:int(args.split_ratio*lgt)],data[x_col][int(args.split_ratio*lgt):],data[y_col][:int(args.split_ratio*lgt)],data[y_col][int(args.split_ratio*lgt):]
+    return (train_x,test_x,train_y,test_y)
+
+def train(args):
+    train_x,test_x,train_y,test_y = split_data(args)
+    model=Sequential()
+    model.add(Dense(args.ip_size,input_shape=train_x.shape[1:],
+    activation=args.ip_activation))
+    model.add(Dense(args.hidden_size,activation=args.ip_activation))
+    model.add(Dense(args.op_size,activation=args.op_activation))
+    model.summary()
+    model.compile(loss=args.loss, metrics=['accuracy'], optimizer='adam')
+    model.fit(train_x,train_y,epochs=args.epochs)
+    model.evaluate(test_x,test_y)
+    model.save_weights('./checkpoints/my_checkpoint')
+    model.save(f"{args.model_dir}/model")
+    return model
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--split_ratio",type=float,default=0.3)
+    parser.add_argument("--har_csv",type=str)
+    parser.add_argument("--ip_size",type=int)
+    parser.add_argument("--hidden_size",type=int)
+    parser.add_argument("--op_size",type=int)
+    parser.add_argument("--loss",type=str,default='sparse_categorical_crossentropy')
+    parser.add_argument("--ip_activation",type=str,default="relu")
+    parser.add_argument("--op_activation",type=str,default="softmax")
+    parser.add_argument("--optimizer",type=str,default="adam")
+    parser.add_argument("--epochs",type=int,default=5)
+    parser.add_argument("--model_dir",type=str,default=".")
+    # parse args
+    
+    args = parser.parse_args()
+    print("Inside Parser")
+    print(args)
+    #print("Args in Parser"+args)
+    # return args
+    return args
+
+if __name__ == "__main__":
+    args = parse_args()
+    train(args)

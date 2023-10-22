@@ -1,0 +1,50 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+
+description: Generate the predictions for review data
+
+display_name: Sentiment-results-pipeline
+experiment_name: Sentiment-results-pipeline
+jobs:
+
+  # Fill the command value here
+  prep_job:
+    type: command
+    inputs:
+      data: 
+          type: uri_file
+          path: GenerateResults.csv
+    outputs:
+      output:
+        mode: upload
+       
+    code: ../Preprocess/src
+    environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+    compute: azureml:ComputeHigh
+    # Fill the command value here
+    command: >-
+        
+  # Input for the job is output of the previous job
+  
+  eval_job:
+    type: command
+    inputs:
+      model:
+        path: azureml:Sentiment_Model:1
+        type: mlflow_model
+      # Fill the Input value
+      input: 
+    
+    outputs:
+      output:
+        mode: upload
+      
+    
+    code: src
+    environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+    compute: azureml:ComputeHigh
+    # Fill the command
+    command: >-
+    
+  
+  

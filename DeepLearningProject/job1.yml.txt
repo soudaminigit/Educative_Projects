@@ -1,0 +1,14 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+code: src
+command: >-
+  python main.py 
+  --har_csv ${{inputs.har_csv}}
+inputs:
+  har_csv:
+    type: Uri_file
+    path: azureml://datastores/workspaceblobstore/paths/LocalUpload/d06be001bc4d7ba53af0ccc22def8bf8/har_dataset.csv
+environment: azureml:AzureML-tensorflow-2.4-ubuntu18.04-py37-cpu-inference:9
+compute: azureml:ComputeHigh
+display_name: HAR-example
+experiment_name: HAR-example
+description: Process dataset

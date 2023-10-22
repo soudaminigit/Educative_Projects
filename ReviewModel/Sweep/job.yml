@@ -1,0 +1,48 @@
+$schema: https://azuremlschemas.azureedge.net/latest/sweepJob.schema.json
+type: sweep
+
+trial:
+  code: src
+  command: >-
+    pip install scipy && python train.py 
+    --input ${{inputs.input}}
+    --max_depth ${{search_space.max_depth}}
+    --n_estimators ${{search_space.n_estimators}}
+    --min_samples_leaf ${{search_space.min_samples_leaf}}
+    
+  environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu:9
+
+#Input IMDB.csv from Azure datastore
+inputs:
+  input:
+      type: uri_file
+      path: 
+  
+
+# Using the AzureML compute space 
+compute: azureml:ComputeHigh
+display_name: ML-sweep
+experiment_name: ML-sweep
+description: Sweep a logistic regression on IMDB dataset.
+
+
+sampling_algorithm: 
+search_space:
+  max_depth:
+    type: 
+    values: 
+  n_estimators:
+    type: 
+    values: 
+  min_samples_leaf:
+    type: 
+    values: 
+  
+
+objective:
+  goal: 
+  primary_metric: 
+limits:
+  max_total_trials: 20
+  max_concurrent_trials: 10
+  timeout: 7200

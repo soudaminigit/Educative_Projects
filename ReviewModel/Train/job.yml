@@ -1,0 +1,28 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+#Assuiming code in src folder
+code: src
+
+command: >-
+  
+  
+#Input IMDB_processed.csv from Preprocess job output
+inputs:
+  input:
+      type: uri_file
+      path: 
+  
+# Setting the values for logistic regression parameters
+  
+  C: 
+  penalty: 
+  max_iter: 
+  random_state: 
+
+
+# Using sklearn and Ubuntu environment
+environment: 
+# Using the AzureML compute space 
+compute: azureml:ComputeHigh
+display_name: ML-training-IMDB
+experiment_name: ML-train-IMDB
+description: Train a logistic regression on IMDB dataset.

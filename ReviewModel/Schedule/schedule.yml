@@ -1,0 +1,17 @@
+$schema: https://azuremlschemas.azureedge.net/latest/schedule.schema.json
+name: daily_review_pipeline_schedule
+display_name: Daily recurrence Review Pipeline schedule
+description: Daily recurrence job schedule
+
+trigger:
+  type: recurrence
+  frequency:  #can be minute, hour, day, week, month
+  interval:  #every day
+  schedule:
+    hours: 
+    minutes: 
+  start_time: "2023-01-10T10:00:00" # optional - default will be schedule creation time
+  time_zone: "Pacific Standard Time" # optional - default will be UTC
+
+# create_job: azureml:simple-pipeline-job
+create_job: 

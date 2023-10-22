@@ -1,0 +1,30 @@
+Collecting bs4
+  Downloading bs4-0.0.1.tar.gz (1.1 kB)
+Collecting beautifulsoup4
+  Downloading beautifulsoup4-4.11.2-py3-none-any.whl (129 kB)
+Collecting soupsieve>1.2
+  Downloading soupsieve-2.4-py3-none-any.whl (37 kB)
+Building wheels for collected packages: bs4
+  Building wheel for bs4 (setup.py): started
+  Building wheel for bs4 (setup.py): finished with status 'done'
+  Created wheel for bs4: filename=bs4-0.0.1-py3-none-any.whl size=1271 sha256=95ca396872bf809d78dcf7f86e76a4a97cd53b6f647b474ae865d871354833c6
+  Stored in directory: /root/.cache/pip/wheels/0a/9e/ba/20e5bbc1afef3a491f0b3bb74d508f99403aabe76eda2167ca
+Successfully built bs4
+Installing collected packages: soupsieve, beautifulsoup4, bs4
+Successfully installed beautifulsoup4-4.11.2 bs4-0.0.1 soupsieve-2.4
+Collecting nltk
+  Downloading nltk-3.8.1-py3-none-any.whl (1.5 MB)
+Collecting regex>=2021.8.3
+  Downloading regex-2022.10.31-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (757 kB)
+Requirement already satisfied: click in /azureml-envs/sklearn-0.24.1/lib/python3.7/site-packages (from nltk) (8.0.1)
+Requirement already satisfied: joblib in /azureml-envs/sklearn-0.24.1/lib/python3.7/site-packages (from nltk) (1.0.1)
+Requirement already satisfied: tqdm in /azureml-envs/sklearn-0.24.1/lib/python3.7/site-packages (from nltk) (4.59.0)
+Requirement already satisfied: importlib-metadata; python_version < "3.8" in /azureml-envs/sklearn-0.24.1/lib/python3.7/site-packages (from click->nltk) (4.8.1)
+Requirement already satisfied: zipp>=0.5 in /azureml-envs/sklearn-0.24.1/lib/python3.7/site-packages (from importlib-metadata; python_version < "3.8"->click->nltk) (3.6.0)
+Requirement already satisfied: typing-extensions>=3.6.4; python_version < "3.8" in /azureml-envs/sklearn-0.24.1/lib/python3.7/site-packages (from importlib-metadata; python_version < "3.8"->click->nltk) (3.10.0.2)
+Installing collected packages: regex, nltk
+Successfully installed nltk-3.8.1 regex-2022.10.31
+preprocessing.py:12: MarkupResemblesLocatorWarning: The input looks more like a filename than markup. You may want to open this file and pass the filehandle into Beautiful Soup.
+  soup = BeautifulSoup(text, "html.parser")
+/mnt/azureml/cr/j/b00ee3f98bc844d596a8ecf1184ddf79/cap/data-capability/wd/INPUT_data/IMDB_Review.csv
+text data preprocessed !

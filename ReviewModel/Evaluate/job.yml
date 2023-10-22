@@ -1,0 +1,34 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+#Assuiming code in src folder
+code: src
+
+command: >-
+  pip install scipy && python train.py 
+  --input ${{inputs.input}}
+  --model ${{inputs.model}}
+  --output ${{outputs.result}}
+  
+  
+#Input GenerateResults.csv, 
+# Provide the model path in Azure
+inputs:
+  input:
+      type: uri_file
+      path: GenerateResults.csv
+  model:
+    path: 
+    type: mlflow_model
+ 
+outputs:
+  result:
+    type: uri_file
+    mode: upload
+
+
+# Using sklearn and Ubuntu environment
+environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu:9
+# Using the AzureML compute space 
+compute: azureml:ComputeHigh
+display_name: ML-training
+experiment_name: ML-train
+description: Train a logistic regression on IMDB dataset.
